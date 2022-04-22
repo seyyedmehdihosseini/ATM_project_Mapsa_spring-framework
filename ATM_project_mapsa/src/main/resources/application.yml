@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+---
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/atm_mapsa
+    username: postgres
+    password: 1376
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
