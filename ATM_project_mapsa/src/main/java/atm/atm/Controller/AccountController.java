@@ -14,26 +14,26 @@ import java.util.List;
 public class AccountController {
     private IAccountService service;
 
-    @PostMapping("/account")
+    @PostMapping("/account/add")
     public ResponseEntity<?> addAccount(@RequestParam String username, @RequestBody Account account) {
         Account created = service.created(username, account);
         return new ResponseEntity<>(created,HttpStatus.CREATED);
     }
 
-    @PutMapping("/account/")
-    public ResponseEntity<?> updateAccount(Account account) {
+    @PutMapping("/account/customer/update/") // change update is layer service account
+    public ResponseEntity<?> updateAccount(@RequestBody Account account) {
         Account update = service.update(account);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
-    @DeleteMapping("/account")
+    @DeleteMapping("/account/delete")
     public ResponseEntity<?> deleteAccount(@RequestParam Long accountNumber) {
         service.deleteByUnique(accountNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    @GetMapping("/account")
+    @GetMapping("/account/customer/../allAccount")
     public ResponseEntity<?> findAllAccountByUsername(@RequestParam String username) {
         List<Account> allByUsername = service.findAllByUsername(username);
         if (!allByUsername.isEmpty()) {
@@ -55,7 +55,7 @@ public class AccountController {
     }
 
 
-    @GetMapping("/account/{id}/amount")
+    @GetMapping("/account/customer/balance{id}")
     public ResponseEntity<?> getBalance(@PathVariable("id") Long accountNumber) {
         if (service.existByAccountNumbers(accountNumber)) {
             Account byUnique = service.findByUnique(accountNumber);
@@ -65,14 +65,14 @@ public class AccountController {
         }
     }
 
-    @PutMapping("/account/increase/")
+    @PutMapping("/account/customer/increase")
     public ResponseEntity<?> increaseInventory(@RequestParam Long accountNumber, @RequestParam Long amount) {
         Long deposit = service.depositToAccount(accountNumber, amount);
         return new ResponseEntity<>("amount : " + deposit, HttpStatus.OK);
     }
 
 
-    @PutMapping()
+    @PutMapping("/account/customer/fundTransfer")
     public ResponseEntity<?> fundTransfers(Long accountNumberSender, Long amount, Long AccountNumberReceiver) {
         Boolean aBoolean = service.fundTransfers(accountNumberSender, amount, AccountNumberReceiver);
         if (aBoolean) {

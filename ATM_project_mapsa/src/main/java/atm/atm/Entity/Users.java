@@ -1,11 +1,13 @@
 package atm.atm.Entity;
 
+import atm.atm.enums.Roles;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -14,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Users implements Serializable {
+public class Users extends BaseClass {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,6 +28,13 @@ public class Users implements Serializable {
     private String username;
 
     private String password;
+
+    private Boolean enabled=true;
+
+    @ElementCollection(targetClass = Roles.class)
+    @CollectionTable(name = "roles" , joinColumns = @JoinColumn(name = "username",referencedColumnName = "username") )
+    @Enumerated(EnumType.STRING)
+    private List<Roles> roles;
 
     @Override
     public boolean equals(Object o) {

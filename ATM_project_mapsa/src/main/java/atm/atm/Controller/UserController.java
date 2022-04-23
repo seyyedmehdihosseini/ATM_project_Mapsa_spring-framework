@@ -16,7 +16,7 @@ public class UserController {
 
     private IUserService service ;
 
-    @PostMapping("/user")
+    @PostMapping("/user/add")
     public ResponseEntity<?> createdUser(@RequestBody Users user){
       if (!service.existUserByUsername(user.getUsername())){
           if (user.getUsername().length()>9 && user.getUsername().length()<12){
@@ -46,7 +46,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/user")
+    @GetMapping("/user/findAllUser")
     public ResponseEntity<?> findAllUser(){
         List<Users> all = service.findAll();
         if (all.size()>0){

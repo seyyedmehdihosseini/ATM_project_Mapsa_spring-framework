@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Account implements Serializable {
+public class Account extends BaseClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
